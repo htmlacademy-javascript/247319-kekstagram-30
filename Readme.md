@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Roman Milaev](https://up.htmlacademy.ru/javascript/30/user/247319).
-* Наставник: `Неизвестно`.
+* Наставник: [Андрей Изосимов](https://htmlacademy.ru/profile/id605037).
 
 ---
 

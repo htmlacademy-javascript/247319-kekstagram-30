@@ -6,17 +6,17 @@ function countStringLength (string, length) {
   return false;
 }
 
-console.log(countStringLength('dff', 3));
+countStringLength('dff', 3);
 
 function isPalindrome (string) {
-  let normalizedString = string.replaceAll(' ', '').toLowerCase();
+  const NORMALISED_STRING = string.replaceAll(' ', '').toLowerCase();
 
   let reversedString = '';
-  for (let i = normalizedString.length - 1; i >= 0; i--) {
-    reversedString += normalizedString.at(i);
+  for (let i = NORMALISED_STRING.length - 1; i >= 0; i--) {
+    reversedString += NORMALISED_STRING.at(i);
   }
 
-  return normalizedString === reversedString;
+  return NORMALISED_STRING === reversedString;
 }
 
-console.log(isPalindrome('TEt TeNEt TeNET Tet'));
+isPalindrome('TEt TeNEt TeNET Tet');

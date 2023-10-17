@@ -107,4 +107,5 @@ function createPhotoDescription () {
   };
 }
 
-const SIMILAR_PHOTO_POSTS = Array.from({length: SIMILAR_PHOTO_POSTS_COUNT}, createPhotoDescription);
+const createSimilarPhotoDescriptions = () => Array.from({length: SIMILAR_PHOTO_POSTS_COUNT}, createPhotoDescription);
+createSimilarPhotoDescriptions();

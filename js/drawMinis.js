@@ -11,7 +11,7 @@ SIMILAR_PHOTO_POSTS.forEach((post) => {
   MINI_PICTURE_ELEMENT.querySelector('.picture__img').alt = post.description;
   MINI_PICTURE_ELEMENT.querySelector('.picture__likes').textContent = post.likes;
   MINI_PICTURE_ELEMENT.querySelector('.picture__comments').textContent = post.comments.length;
-  MINI_PICTURE_PLACE.append(MINI_PICTURE_ELEMENT);
+  SIMILAR_POST_FRAGMENT.append(MINI_PICTURE_ELEMENT);
 });
 
 const drawMinis = () => MINI_PICTURE_PLACE.append(SIMILAR_POST_FRAGMENT);

@@ -1,3 +1,3 @@
-import {createSimilarPhotoDescriptions} from './data.js';
+import {drawMinis} from './drawMinis.js';
 
-createSimilarPhotoDescriptions();
+drawMinis();

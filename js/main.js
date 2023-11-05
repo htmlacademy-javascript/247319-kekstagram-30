@@ -1,3 +1,3 @@
-import {drawMinis} from './drawMinis.js';
+import {renderThumbnails} from './thumbnails.js';
 
-drawMinis();
+renderThumbnails();

@@ -11,8 +11,8 @@ similarPhotoPosts.forEach((post) => {
   const miniPicture = miniPictureTemplate.cloneNode(true);
 
   miniPicture.addEventListener('click', () => {
-    createBigPhotoPost(post);
     openBigPicture();
+    createBigPhotoPost(post);
   });
   miniPicture.querySelector('.picture__img').src = post.url;
   miniPicture.querySelector('.picture__img').alt = post.description;

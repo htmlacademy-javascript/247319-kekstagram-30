@@ -46,7 +46,7 @@ const NAMES = [
   'Мария',
 ];
 
-function createMessage() {
+function createMessage () {
   const messageIndex = getRandomInteger(0, MESSAGES.length - 1);
   const messageIndex2 = getRandomInteger(0, MESSAGES.length - 1);
   let messageText;

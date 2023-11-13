@@ -33,13 +33,13 @@ function createCommentsForBigPhotoPost() {
     commentAvatar.alt = comment.name;
     commentAvatar.width = 35;
     commentAvatar.height = 35;
+    commentItem.appendChild(commentAvatar);
 
     const commentText = document.createElement('p');
     commentText.classList.add('social__text');
     commentText.textContent = comment.message;
-
-    commentItem.appendChild(commentAvatar);
     commentItem.appendChild(commentText);
+
     commentsList.appendChild(commentItem);
   });
 
@@ -48,7 +48,6 @@ function createCommentsForBigPhotoPost() {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-
   commentsCount.textContent = Math.min(commentsShownCount, comments.length);
   totalCommentsCount.textContent = comments.length;
 }

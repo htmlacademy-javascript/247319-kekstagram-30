@@ -7,7 +7,7 @@ const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectTitle = document.querySelectorAll('.effects__radio');
 
-function changeScale(direction) {
+function changeScale (direction) {
   let currentValue = parseInt(scaleControlValue.value, 10);
   if (direction === 'smaller' && currentValue > 25) {
     currentValue -= 25;
@@ -35,7 +35,7 @@ noUiSlider.create(slider, {
   connect: 'lower',
 });
 
-function updateSliderOptions(min, max, step, unit) {
+function updateSliderOptions (min, max, step, unit) {
   slider.noUiSlider.updateOptions({
     range: {
       min: min,
@@ -46,53 +46,100 @@ function updateSliderOptions(min, max, step, unit) {
   });
 }
 
-function changeEffects(effect) {
+function changeEffects (effect) {
   effectLevelValue.value = slider.noUiSlider.get();
+  if (effect === 'none') {
+    effectLevel.style.display = 'none';
+  } else {
+    effectLevel.style.display = 'block';
+  }
   switch (effect) {
     case 'none':
       imgPreview.style.filter = 'none';
-      effectLevel.style.display = 'none';
       break;
     case 'chrome':
-      effectLevel.style.display = 'block';
-      updateSliderOptions(0, 1, 0.1, '');
       imgPreview.style.filter = `grayscale(${effectLevelValue.value})`;
       break;
     case 'sepia':
-      effectLevel.style.display = 'block';
-      updateSliderOptions(0, 1, 0.1, '');
       imgPreview.style.filter = `sepia(${effectLevelValue.value})`;
       break;
     case 'marvin':
-      effectLevel.style.display = 'block';
-      updateSliderOptions(0, 100, 1, '%');
       imgPreview.style.filter = `invert(${effectLevelValue.value}%)`;
       break;
     case 'phobos':
-      effectLevel.style.display = 'block';
-      updateSliderOptions(0, 3, 0.1, 'px');
       imgPreview.style.filter = `blur(${effectLevelValue.value}px)`;
       break;
     case 'heat':
-      effectLevel.style.display = 'block';
-      updateSliderOptions(1, 3, 0.1, '');
       imgPreview.style.filter = `brightness(${effectLevelValue.value})`;
       break;
   }
 }
 
+function getMinValueForEffect (effect) {
+  switch (effect) {
+    case 'phobos':
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function getMaxValueForEffect (effect) {
+  switch (effect) {
+    case 'marvin':
+      return 100;
+    case 'phobos':
+    case 'heat':
+      return 3;
+    case 'none':
+      return 0;
+    default:
+      return 1;
+  }
+}
+
+function getStepForEffect (effect) {
+  switch (effect) {
+    case 'none':
+      return 0;
+    case 'marvin':
+      return 1;
+    default:
+      return 0.1;
+  }
+}
+
+function getUnitForEffect (effect) {
+  switch (effect) {
+    case 'marvin':
+      return '%';
+    case 'phobos':
+      return 'px';
+    default:
+      return '';
+  }
+}
+
 effectTitle.forEach((radio) => {
-  radio.addEventListener('change', () => {
-    const currentEffect = document.querySelector('.effects__item input:checked').value;
-    changeEffects(currentEffect);
-    slider.noUiSlider.set(100);
+  radio.addEventListener('change', (evt) => {
+    if (evt.target.checked){
+      const currentEffect = evt.target.value;
+      updateSliderOptions(getMinValueForEffect(currentEffect), getMaxValueForEffect(currentEffect), getStepForEffect(currentEffect), getUnitForEffect(currentEffect));
+      slider.noUiSlider.set(100);
+      effectLevelValue.value = 100;
+      changeEffects(currentEffect);
+    }
   });
 });
 
-slider.noUiSlider.on('change', (values, handle) => {
-  effectLevelValue.value = values[handle];
+slider.noUiSlider.on('update', (values) => {
+  effectLevelValue.value = values[0];
   const currentEffect = document.querySelector('.effects__item input:checked').value;
   changeEffects(currentEffect);
 });
 
-export {changeEffects};
+function destroySlider () {
+  slider.noUiSlider.destroy();
+}
+
+export {changeEffects, destroySlider};

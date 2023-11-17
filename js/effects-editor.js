@@ -142,8 +142,4 @@ slider.noUiSlider.on('update', (values) => {
   changeEffects(currentEffect);
 });
 
-// function resetFilters () {
-//   changeEffects('none');
-// }
-
 export {changeEffects};

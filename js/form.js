@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {changeEffects, destroySlider} from './effects-editor.js';
+import {changeEffects} from './effects-editor.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -56,7 +56,6 @@ imgUploadPlace.addEventListener('change', () => {
 
 imgUploadClose.addEventListener('click', () => {
   closeUploadImgForm();
-  destroySlider();
 });
 
 function validateHashtags () {

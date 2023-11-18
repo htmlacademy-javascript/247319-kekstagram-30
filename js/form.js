@@ -1,4 +1,5 @@
 import {isEscapeKey} from './utils.js';
+import {changeEffects} from './effects-editor.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -7,6 +8,7 @@ const body = document.querySelector('body');
 const imgUploadClose = document.querySelector('.img-upload__cancel');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
+const imgPreview = document.querySelector('.img-upload__preview img');
 const HASHTAGS_COUNT_MAX = 5;
 const COMMENT_LENGTH_MAX = 140;
 const ErrorMessage = {
@@ -44,10 +46,12 @@ function closeUploadImgForm () {
   hashtagsInput.value = '';
   commentInput.value = '';
   pristine.reset();
+  imgPreview.style.transform = 'scale(1)';
 }
 
 imgUploadPlace.addEventListener('change', () => {
   openUploadImgForm();
+  changeEffects('none');
 });
 
 imgUploadClose.addEventListener('click', () => {

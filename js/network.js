@@ -1,4 +1,4 @@
-import {showErrorDataDownloadMessage, showErrorPhotoUploadMessage, showSuccessUploadMessage} from './utils.js';
+import {showErrorDataDownloadMessage, showErrorPhotoUploadMessage, showSuccessUploadMessage} from './action-messages.js';
 
 const getData = () => fetch('https://30.javascript.pages.academy/kekstagram/data')
   .then((response) => {
@@ -24,7 +24,7 @@ const sendData = (body) => fetch(
     return showSuccessUploadMessage();
   })
   .catch(() => {
-    throw new Error(showErrorPhotoUploadMessage());
+    throw new Error (showErrorPhotoUploadMessage());
   });
 
 export {getData, sendData};

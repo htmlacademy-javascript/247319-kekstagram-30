@@ -1,11 +1,11 @@
-import {openBigPicture} from './modal.js';
+import {openBigPicture} from './action-full-post.js';
 import {createBigPhotoPost} from './big-photo-post.js';
 
 const miniPictureTemplate = document.querySelector('#picture').content;
 const miniPicturePlace = miniPictureTemplate.querySelector('.picture');
 const similarPhotoPostsFragment = document.createDocumentFragment();
 
-const createMiniPicture = (pictures) => {
+function createMiniPicture (pictures) {
   pictures.forEach((post) => {
     const miniPicture = miniPicturePlace.cloneNode(true);
     miniPicture.addEventListener('click', () => {
@@ -19,13 +19,13 @@ const createMiniPicture = (pictures) => {
     similarPhotoPostsFragment.append(miniPicture);
   });
   return similarPhotoPostsFragment;
-};
+}
 
-const renderMiniPicture = (pictures) => {
+function renderMiniPicture (pictures) {
   const miniPicturesList = document.querySelector('.pictures');
   const similarPictures = createMiniPicture(pictures);
   miniPicturesList.append(similarPictures);
   return miniPicturesList.querySelectorAll('.picture');
-};
+}
 
 export {renderMiniPicture};

@@ -1,6 +1,6 @@
-import {renderMiniPicture} from './mini-picture.js';
 import {getData} from './network.js';
-import {closeUploadImgForm, setUploadFormSubmit} from './form.js';
+import {renderMiniPicture} from './mini-pictures.js';
+import {closeUploadImgForm, setUploadFormSubmit} from './upload-form.js';
 import './effects-editor.js';
 
 getData()

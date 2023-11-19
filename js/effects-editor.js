@@ -138,8 +138,5 @@ slider.noUiSlider.on('update', (values) => {
   changeEffects(currentEffect);
 });
 
-function destroySlider () {
-  slider.noUiSlider.destroy();
-}
 
-export {changeEffects, destroySlider};
+export {changeEffects};

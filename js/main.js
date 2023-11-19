@@ -1,5 +1,11 @@
-import {renderThumbnails} from './thumbnails.js';
-import './form.js';
+import {renderMiniPicture} from './mini-picture.js';
+import {getData} from './network.js';
+import {closeUploadImgForm, setUploadFormSubmit} from './form.js';
 import './effects-editor.js';
 
-renderThumbnails();
+getData()
+  .then((miniPhoto) => {
+    renderMiniPicture(miniPhoto);
+  });
+
+setUploadFormSubmit(closeUploadImgForm);

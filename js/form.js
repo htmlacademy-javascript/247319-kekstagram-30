@@ -1,5 +1,8 @@
 import {isEscapeKey} from './utils.js';
-import {changeEffects, destroySlider} from './effects-editor.js';
+import {changeEffects} from './effects-editor.js';
+import {sendData} from './network.js';
+import {showErrorPhotoUploadMessage} from './utils.js';
+
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -56,7 +59,6 @@ imgUploadPlace.addEventListener('change', () => {
 
 imgUploadClose.addEventListener('click', () => {
   closeUploadImgForm();
-  destroySlider();
 });
 
 function validateHashtags () {
@@ -105,8 +107,19 @@ pristine.addValidator(hashtagsInput, validateUniqueHashtags, ErrorMessage.REPEAT
 pristine.addValidator(hashtagsInput, validateCountHashtags, ErrorMessage.INVALID_HASHTAGS_COUNT_ERROR, 3, true);
 pristine.addValidator(commentInput, validateCommentLength, ErrorMessage.LENGTH_COMMENT_ERROR);
 
-uploadForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
+const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    } else {
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch(() => {
+          showErrorPhotoUploadMessage();
+        });
+    }
+  });
+};
+
+export {setUploadFormSubmit, closeUploadImgForm};

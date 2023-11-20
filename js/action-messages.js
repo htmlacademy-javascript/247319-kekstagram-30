@@ -54,4 +54,5 @@ function showErrorDataDownloadMessage () {
   }, 5000);
 }
 
+
 export {isEscapeKey, showErrorPhotoUploadMessage, showErrorDataDownloadMessage, showSuccessUploadMessage};

@@ -43,6 +43,10 @@ function updateSliderOptions (min, max, step, unit) {
     },
     step: step,
     unit: unit,
+    format: {
+      to: (value) => Number(value),
+      from: (value) => Number(value),
+    }
   });
 }
 

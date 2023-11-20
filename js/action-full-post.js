@@ -1,4 +1,4 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey} from './action-messages.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = document.querySelector('.big-picture__cancel');

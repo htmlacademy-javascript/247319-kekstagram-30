@@ -138,5 +138,4 @@ slider.noUiSlider.on('update', (values) => {
   changeEffects(currentEffect);
 });
 
-
 export {changeEffects};

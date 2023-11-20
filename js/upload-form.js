@@ -1,5 +1,6 @@
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey} from './action-messages.js';
 import {changeEffects} from './effects-editor.js';
+import {sendData} from './network.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
@@ -9,6 +10,7 @@ const imgUploadClose = document.querySelector('.img-upload__cancel');
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 const imgPreview = document.querySelector('.img-upload__preview img');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 const HASHTAGS_COUNT_MAX = 5;
 const COMMENT_LENGTH_MAX = 140;
 const ErrorMessage = {
@@ -17,18 +19,24 @@ const ErrorMessage = {
   REPEAT_HASHTAG_ERROR: 'Миву! Хэш-теги повторяются. Сделай их уникальными)',
   LENGTH_COMMENT_ERROR: `Миву! Длина комментария больше ${COMMENT_LENGTH_MAX} символов`,
 };
+const SubmitButtonText = {
+  ACTION: 'Опубликовать',
+  POSTING: 'Публикую...'
+};
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'h2',
-}, false);
+});
 
-function onDocumentKeydown(evt) {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt) && !hashtagsInput.matches(':focus') && !commentInput.matches(':focus')) {
     evt.preventDefault();
-    closeUploadImgForm();
+    if (document.querySelector('.error') === null) {
+      closeUploadImgForm();
+    }
   }
 }
 
@@ -47,6 +55,7 @@ function closeUploadImgForm () {
   commentInput.value = '';
   pristine.reset();
   imgPreview.style.transform = 'scale(1)';
+  imgPreview.style.filter = 'none';
 }
 
 imgUploadPlace.addEventListener('change', () => {
@@ -104,8 +113,28 @@ pristine.addValidator(hashtagsInput, validateUniqueHashtags, ErrorMessage.REPEAT
 pristine.addValidator(hashtagsInput, validateCountHashtags, ErrorMessage.INVALID_HASHTAGS_COUNT_ERROR, 3, true);
 pristine.addValidator(commentInput, validateCommentLength, ErrorMessage.LENGTH_COMMENT_ERROR);
 
-uploadForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
+function blockSubmitButton () {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.POSTING;
+}
+
+function unblockSubmitButton () {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.ACTION;
+}
+
+const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+    if (!pristine.validate()) {
+      evt.preventDefault();
+    } else {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export {setUploadFormSubmit, closeUploadImgForm};

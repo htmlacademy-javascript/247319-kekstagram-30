@@ -19,7 +19,7 @@ const ErrorMessage = {
   REPEAT_HASHTAG_ERROR: 'Миву! Хэш-теги повторяются. Сделай их уникальными)',
   LENGTH_COMMENT_ERROR: `Миву! Длина комментария больше ${COMMENT_LENGTH_MAX} символов`,
 };
-const SubmitButtontext = {
+const SubmitButtonText = {
   ACTION: 'Опубликовать',
   POSTING: 'Публикую...'
 };
@@ -115,12 +115,12 @@ pristine.addValidator(commentInput, validateCommentLength, ErrorMessage.LENGTH_C
 
 function blockSubmitButton () {
   submitButton.disabled = true;
-  submitButton.textContent = SubmitButtontext.POSTING;
+  submitButton.textContent = SubmitButtonText.POSTING;
 }
 
 function unblockSubmitButton () {
   submitButton.disabled = false;
-  submitButton.textContent = SubmitButtontext.ACTION;
+  submitButton.textContent = SubmitButtonText.ACTION;
 }
 
 const setUploadFormSubmit = (onSuccess) => {

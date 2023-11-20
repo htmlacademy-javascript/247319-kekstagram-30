@@ -1,38 +1,46 @@
 const body = document.querySelector('body');
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function showErrorPhotoUploadMessage () {
-  const errorMessageTemplate = document.querySelector('#error').content;
-  const errorMessage = errorMessageTemplate.cloneNode(true).querySelector('.error');
+function showMessage (typeMessage, idTemplate, classMessage) {
+  const messageTemplate = document.querySelector(idTemplate).content;
+  const message = messageTemplate.cloneNode(true).querySelector(classMessage);
 
-  document.body.append(errorMessage);
+  document.body.append(message);
 
   document.addEventListener('keydown', onKeydown);
   document.addEventListener('click', closeAfterClickOutside);
 
-  const tryAgainButton = document.querySelector('.error__button');
+  const closeButton = document.querySelector(`.${typeMessage}__button`);
 
-  function closeTryAgainWindow () {
-    errorMessage.remove();
+  function closeMessageWindow () {
+    message.remove();
     document.removeEventListener('keydown', onKeydown);
     document.removeEventListener('click', closeAfterClickOutside);
   }
 
-  tryAgainButton.addEventListener('click', () => {
-    closeTryAgainWindow();
+  closeButton.addEventListener('click', () => {
+    closeMessageWindow();
   });
 
   function onKeydown (evt) {
     if(isEscapeKey(evt)) {
-      closeTryAgainWindow();
+      closeMessageWindow();
     }
   }
 
   function closeAfterClickOutside (evt) {
-    if(errorMessage.contains(evt.target)) {
-      closeTryAgainWindow();
+    if(message.contains(evt.target)) {
+      closeMessageWindow();
     }
   }
+}
+
+function showErrorPhotoUploadMessage () {
+  showMessage('error', '#error', '.error');
+}
+
+function showSuccessUploadMessage () {
+  showMessage('success', '#success', '.success');
 }
 
 function showErrorDataDownloadMessage () {
@@ -44,40 +52,6 @@ function showErrorDataDownloadMessage () {
   setTimeout(() => {
     dataErrorMessage.remove ();
   }, 5000);
-}
-
-function showSuccessUploadMessage () {
-  const successUploadMessageTemplate = document.querySelector('#success').content;
-  const successUploadMessage = successUploadMessageTemplate.cloneNode(true).querySelector('.success');
-
-  body.append(successUploadMessage);
-
-  document.addEventListener('keydown', onKeydown);
-  document.addEventListener('click', closeAfterClickOutside);
-
-  const successButton = document.querySelector('.success__button');
-
-  function closeSuccessWindow () {
-    successUploadMessage.remove();
-    document.removeEventListener('keydown', onKeydown);
-    document.removeEventListener('click', closeAfterClickOutside);
-  }
-
-  successButton.addEventListener('click', () => {
-    closeSuccessWindow();
-  });
-
-  function onKeydown (evt) {
-    if(isEscapeKey(evt)) {
-      closeSuccessWindow();
-    }
-  }
-
-  function closeAfterClickOutside (evt) {
-    if(successUploadMessage.contains(evt.target)) {
-      closeSuccessWindow();
-    }
-  }
 }
 
 export {isEscapeKey, showErrorPhotoUploadMessage, showErrorDataDownloadMessage, showSuccessUploadMessage};

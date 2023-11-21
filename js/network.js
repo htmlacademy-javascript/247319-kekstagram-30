@@ -9,12 +9,13 @@ const Route = {
 const getData = () => fetch(`${BASE_URL}${Route.GET_DATA}`)
   .then((response) => {
     if(!response.ok) {
-      throw new Error(showErrorDataDownloadMessage());
+      throw new Error('Произошла ошибка при загрузке данных');
     }
     return response.json();
   })
-  .catch(() => {
-    throw new Error(showErrorDataDownloadMessage());
+  .catch((error) => {
+    showErrorDataDownloadMessage();
+    throw error;
   });
 
 const sendData = (body) => fetch(
@@ -25,9 +26,13 @@ const sendData = (body) => fetch(
   })
   .then((response) => {
     if (!response.ok) {
-      throw new Error(showErrorPhotoUploadMessage());
+      throw new Error('Произошла ошибка при отправке данных');
     }
     return showSuccessUploadMessage();
+  })
+  .catch((error) => {
+    showErrorPhotoUploadMessage();
+    throw error;
   });
 
 export {getData, sendData};

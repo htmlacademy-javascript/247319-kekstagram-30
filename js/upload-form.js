@@ -15,6 +15,7 @@ const SubmitButtonText = {
   ACTION: 'Опубликовать',
   POSTING: 'Публикую...'
 };
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const imgUploadPlace = document.querySelector('.img-upload__input');
@@ -56,9 +57,17 @@ function closeUploadImgForm () {
   uploadForm.reset();
   imgPreview.style.transform = 'scale(1)';
   imgPreview.style.filter = 'none';
+  imgPreview.src = '';
 }
 
 imgUploadPlace.addEventListener('change', () => {
+  const file = imgUploadPlace.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+  }
   openUploadImgForm();
   changeEffects('none');
 });

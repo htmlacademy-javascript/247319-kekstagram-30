@@ -24,7 +24,7 @@ function sortingRandom () {
       .then((miniPicture) => {
         const shuffledPictures = shuffleArray(miniPicture);
         const delayedRender = debounce(() => {
-          renderMiniPicture(shuffledPictures.splice(MAX_COUNT_SORTING_RANDOM));
+          renderMiniPicture(shuffledPictures.slice(0, MAX_COUNT_SORTING_RANDOM));
         }, RERENDER_DELAY);
         delayedRender();
       });

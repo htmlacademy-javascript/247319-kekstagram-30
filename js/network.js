@@ -1,6 +1,12 @@
 import {showErrorDataDownloadMessage, showErrorPhotoUploadMessage, showSuccessUploadMessage} from './action-messages.js';
 
-const getData = () => fetch('https://30.javascript.pages.academy/kekstagram/data')
+const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+
+const getData = () => fetch(`${BASE_URL}${Route.GET_DATA}`)
   .then((response) => {
     if(!response.ok) {
       throw new Error(showErrorDataDownloadMessage());
@@ -12,7 +18,7 @@ const getData = () => fetch('https://30.javascript.pages.academy/kekstagram/data
   });
 
 const sendData = (body) => fetch(
-  'https://30.javascript.pages.academy/kekstagram',
+  `${BASE_URL}${Route.SEND_DATA}`,
   {
     method: 'POST',
     body,
@@ -22,9 +28,6 @@ const sendData = (body) => fetch(
       throw new Error(showErrorPhotoUploadMessage());
     }
     return showSuccessUploadMessage();
-  })
-  .catch(() => {
-    throw new Error (showErrorPhotoUploadMessage());
   });
 
 export {getData, sendData};

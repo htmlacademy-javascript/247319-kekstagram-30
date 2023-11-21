@@ -1,5 +1,5 @@
 import {openBigPicture} from './action-full-post.js';
-import {createBigPhotoPost} from './big-photo-post.js';
+import {createBigPhotoPost} from './create-full-post.js';
 
 const miniPictureTemplate = document.querySelector('#picture').content;
 const miniPicturePlace = miniPictureTemplate.querySelector('.picture');
@@ -28,4 +28,11 @@ function renderMiniPicture (pictures) {
   return miniPicturesList.querySelectorAll('.picture');
 }
 
-export {renderMiniPicture};
+function clearMiniPictures () {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((picture) => {
+    picture.remove();
+  });
+}
+
+export {renderMiniPicture, clearMiniPictures};

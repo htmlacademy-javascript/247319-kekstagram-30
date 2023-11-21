@@ -1,5 +1,6 @@
+import {isEscapeKey} from './utils.js';
+
 const body = document.querySelector('body');
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 function showMessage (typeMessage, idTemplate, classMessage) {
   const messageTemplate = document.querySelector(idTemplate).content;
@@ -54,4 +55,4 @@ function showErrorDataDownloadMessage () {
   }, 5000);
 }
 
-export {isEscapeKey, showErrorPhotoUploadMessage, showErrorDataDownloadMessage, showSuccessUploadMessage};
+export {showErrorPhotoUploadMessage, showErrorDataDownloadMessage, showSuccessUploadMessage};

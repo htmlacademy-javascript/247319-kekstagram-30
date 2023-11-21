@@ -1,3 +1,4 @@
+const COMMENTS_PER_PAGE = 5;
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const photoDescription = document.querySelector('.social__caption');
@@ -5,7 +6,6 @@ const commentsList = document.querySelector('.social__comments');
 const commentsCount = document.querySelector('.social__comment-shown-count');
 const totalCommentsCount = document.querySelector('.social__comment-total-count');
 const commentsLoader = document.querySelector('.comments-loader');
-const COMMENTS_PER_PAGE = 5;
 let commentsShownCount = COMMENTS_PER_PAGE;
 let comments = [];
 

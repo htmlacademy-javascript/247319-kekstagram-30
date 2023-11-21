@@ -1,16 +1,8 @@
-import {isEscapeKey} from './action-messages.js';
+import {isEscapeKey} from './utils.js';
 import {changeEffects} from './effects-editor.js';
 import {sendData} from './network.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const imgUpload = document.querySelector('.img-upload__overlay');
-const imgUploadPlace = document.querySelector('.img-upload__input');
-const body = document.querySelector('body');
-const imgUploadClose = document.querySelector('.img-upload__cancel');
-const hashtagsInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__description');
-const imgPreview = document.querySelector('.img-upload__preview img');
-const submitButton = uploadForm.querySelector('.img-upload__submit');
+const HASGTAG_EXPRESSION_FOR_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAGS_COUNT_MAX = 5;
 const COMMENT_LENGTH_MAX = 140;
 const ErrorMessage = {
@@ -23,6 +15,15 @@ const SubmitButtonText = {
   ACTION: 'Опубликовать',
   POSTING: 'Публикую...'
 };
+const uploadForm = document.querySelector('.img-upload__form');
+const imgUpload = document.querySelector('.img-upload__overlay');
+const imgUploadPlace = document.querySelector('.img-upload__input');
+const body = document.querySelector('body');
+const imgUploadClose = document.querySelector('.img-upload__cancel');
+const hashtagsInput = uploadForm.querySelector('.text__hashtags');
+const commentInput = uploadForm.querySelector('.text__description');
+const imgPreview = document.querySelector('.img-upload__preview img');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -34,7 +35,8 @@ const pristine = new Pristine(uploadForm, {
 function onDocumentKeydown (evt) {
   if (isEscapeKey(evt) && !hashtagsInput.matches(':focus') && !commentInput.matches(':focus')) {
     evt.preventDefault();
-    if (document.querySelector('.error') === null) {
+    const errorWindow = document.querySelector('.error');
+    if (!errorWindow) {
       closeUploadImgForm();
     }
   }
@@ -50,10 +52,8 @@ function closeUploadImgForm () {
   imgUpload.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  imgUploadPlace.value = '';
-  hashtagsInput.value = '';
-  commentInput.value = '';
   pristine.reset();
+  uploadForm.reset();
   imgPreview.style.transform = 'scale(1)';
   imgPreview.style.filter = 'none';
 }
@@ -80,15 +80,13 @@ function validateHashtags () {
     if (tag.startsWith('#')) {
       const tagContent = tag.slice(1);
       if (tagContent.length > 1 && tagContent.length <= 19) {
-        if (/^#[a-zа-яё0-9]{1,19}$/i.test(tag)) {
+        if (HASGTAG_EXPRESSION_FOR_VALIDATION.test(tag)) {
           continue;
         }
       }
     }
-
     return false;
   }
-
   return true;
 }
 
@@ -101,6 +99,7 @@ function validateUniqueHashtags () {
 
 function validateCountHashtags () {
   const hashtags = hashtagsInput.value.toLowerCase().trim().split(' ');
+
   return hashtags.length <= HASHTAGS_COUNT_MAX;
 }
 

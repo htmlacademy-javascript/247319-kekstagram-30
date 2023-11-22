@@ -30,7 +30,7 @@ function showMessage (typeMessage, idTemplate, classMessage) {
   }
 
   function closeAfterClickOutside (evt) {
-    if(message.contains(evt.target)) {
+    if(evt.target.closest('.success__inner') === null && evt.target.closest('.error__inner') === null) {
       closeMessageWindow();
     }
   }

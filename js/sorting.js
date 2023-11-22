@@ -1,5 +1,4 @@
 import {renderMiniPicture, clearMiniPictures} from './mini-picture.js';
-import {getData} from './network.js';
 import {shuffleArray, sortByCommentsLength, debounce} from './utils.js';
 
 const RERENDER_DELAY = 500;
@@ -14,49 +13,44 @@ function showFilters () {
   filterButtons.classList.remove('img-filters--inactive');
 }
 
-function sortingRandom () {
+function sortingRandom(miniPicture) {
+  const delayedRender = debounce((shuffledPictures) => {
+    renderMiniPicture(shuffledPictures.slice(0, MAX_COUNT_SORTING_RANDOM));
+  }, RERENDER_DELAY);
+
   filterRandom.addEventListener('click', () => {
-    clearMiniPictures();
     filterDefault.classList.remove(`${activeClassButton}`);
     filterDiscussed.classList.remove(`${activeClassButton}`);
     filterRandom.classList.add(`${activeClassButton}`);
-    getData()
-      .then((miniPicture) => {
-        const shuffledPictures = shuffleArray(miniPicture);
-        const delayedRender = debounce(() => {
-          renderMiniPicture(shuffledPictures.slice(0, MAX_COUNT_SORTING_RANDOM));
-        }, RERENDER_DELAY);
-        delayedRender();
-      });
+    const shuffledPictures = shuffleArray(miniPicture);
+    clearMiniPictures();
+    delayedRender(shuffledPictures);
   });
 }
 
-function sortingDefault () {
+function sortingDefault (miniPicture) {
+  const delayedRender = debounce(() => {
+    renderMiniPicture(miniPicture);
+  }, RERENDER_DELAY);
   filterDefault.addEventListener('click', () => {
-    clearMiniPictures();
     filterDiscussed.classList.remove(`${activeClassButton}`);
     filterRandom.classList.remove(`${activeClassButton}`);
     filterDefault.classList.add(`${activeClassButton}`);
-    getData()
-      .then((miniPicture) => {
-        const delayedRender = debounce(() => renderMiniPicture(miniPicture), RERENDER_DELAY);
-        delayedRender();
-      });
+    clearMiniPictures();
+    delayedRender();
   });
 }
 
-function sortingDiscussed () {
+
+function sortingDiscussed (miniPicture) {
+  const sortedPictures = sortByCommentsLength(miniPicture);
+  const delayedRender = debounce(() => renderMiniPicture(sortedPictures), RERENDER_DELAY);
   filterDiscussed.addEventListener('click', () => {
-    clearMiniPictures();
     filterDefault.classList.remove(`${activeClassButton}`);
     filterRandom.classList.remove(`${activeClassButton}`);
     filterDiscussed.classList.add(`${activeClassButton}`);
-    getData()
-      .then((miniPicture) => {
-        const sortedPictures = sortByCommentsLength(miniPicture);
-        const delayedRender = debounce(() => renderMiniPicture(sortedPictures), RERENDER_DELAY);
-        delayedRender();
-      });
+    clearMiniPictures();
+    delayedRender();
   });
 }
 

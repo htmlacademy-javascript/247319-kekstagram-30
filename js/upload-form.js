@@ -1,6 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {changeEffects} from './effects-editor.js';
 import {sendData} from './network.js';
+import {showSuccessUploadMessage, showErrorPhotoUploadMessage} from './action-messages.js';
 
 const HASGTAG_EXPRESSION_FOR_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAGS_COUNT_MAX = 5;
@@ -69,6 +70,10 @@ imgUploadPlace.addEventListener('change', () => {
     imgPreview.src = URL.createObjectURL(file);
   }
   openUploadImgForm();
+  const effectsPreview = uploadForm.querySelectorAll('.effects__preview');
+  effectsPreview.forEach((preview) => {
+    preview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+  });
   changeEffects('none');
 });
 
@@ -77,7 +82,7 @@ imgUploadClose.addEventListener('click', () => {
 });
 
 function validateHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(' ');
+  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
 
   for (let i = 0; i < hashtags.length; i++) {
     const tag = hashtags[i];
@@ -88,7 +93,7 @@ function validateHashtags () {
 
     if (tag.startsWith('#')) {
       const tagContent = tag.slice(1);
-      if (tagContent.length > 1 && tagContent.length <= 19) {
+      if (tagContent.length >= 1 && tagContent.length <= 19) {
         if (HASGTAG_EXPRESSION_FOR_VALIDATION.test(tag)) {
           continue;
         }
@@ -100,14 +105,14 @@ function validateHashtags () {
 }
 
 function validateUniqueHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(' ');
+  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
   const uniqueHashtags = new Set(hashtags);
 
   return uniqueHashtags.size === hashtags.length;
 }
 
 function validateCountHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(' ');
+  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
 
   return hashtags.length <= HASHTAGS_COUNT_MAX;
 }
@@ -139,7 +144,13 @@ const setUploadFormSubmit = (onSuccess) => {
     } else {
       blockSubmitButton();
       sendData(new FormData(evt.target))
-        .then(onSuccess)
+        .then(() => {
+          showSuccessUploadMessage();
+          onSuccess();
+        })
+        .catch(() => {
+          showErrorPhotoUploadMessage();
+        })
         .finally(unblockSubmitButton);
     }
   });

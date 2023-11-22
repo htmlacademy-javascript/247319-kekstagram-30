@@ -6,11 +6,13 @@ import {showFilters, sortingRandom, sortingDefault, sortingDiscussed} from './so
 
 getData()
   .then((miniPicture) => {
-    renderMiniPicture(miniPicture);
-    showFilters();
-    sortingRandom();
-    sortingDefault();
-    sortingDiscussed();
+    if (typeof miniPicture !== 'undefined') {
+      renderMiniPicture(miniPicture);
+      showFilters();
+      sortingRandom(miniPicture);
+      sortingDefault(miniPicture);
+      sortingDiscussed(miniPicture);
+    }
   });
 
 setUploadFormSubmit(closeUploadImgForm);

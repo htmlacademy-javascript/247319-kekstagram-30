@@ -4,9 +4,9 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureClose = document.querySelector('.big-picture__cancel');
 const body = document.querySelector('body');
 
-function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
+function onDocumentKeydown(event) {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
     closeBigPicture();
   }
 }

@@ -1,4 +1,4 @@
-import {showErrorDataDownloadMessage, showErrorPhotoUploadMessage, showSuccessUploadMessage} from './action-messages.js';
+import {showErrorDataDownloadMessage} from './action-messages.js';
 
 const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
 const Route = {
@@ -13,9 +13,8 @@ const getData = () => fetch(`${BASE_URL}${Route.GET_DATA}`)
     }
     return response.json();
   })
-  .catch((error) => {
+  .catch(() => {
     showErrorDataDownloadMessage();
-    throw error;
   });
 
 const sendData = (body) => fetch(
@@ -28,10 +27,9 @@ const sendData = (body) => fetch(
     if (!response.ok) {
       throw new Error('Произошла ошибка при отправке данных');
     }
-    return showSuccessUploadMessage();
+    return response.json();
   })
   .catch((error) => {
-    showErrorPhotoUploadMessage();
     throw error;
   });
 

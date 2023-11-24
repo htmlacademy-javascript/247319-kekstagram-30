@@ -9,28 +9,28 @@ function showMessage (typeMessage, idTemplate, classMessage) {
   document.body.append(message);
 
   document.addEventListener('keydown', onKeydown);
-  document.addEventListener('click', closeAfterClickOutside);
+  document.addEventListener('click', onClickOutside);
 
   const closeButton = document.querySelector(`.${typeMessage}__button`);
 
   function closeMessageWindow () {
     message.remove();
     document.removeEventListener('keydown', onKeydown);
-    document.removeEventListener('click', closeAfterClickOutside);
+    document.removeEventListener('click', onClickOutside);
   }
 
   closeButton.addEventListener('click', () => {
     closeMessageWindow();
   });
 
-  function onKeydown (evt) {
-    if(isEscapeKey(evt)) {
+  function onKeydown (event) {
+    if(isEscapeKey(event)) {
       closeMessageWindow();
     }
   }
 
-  function closeAfterClickOutside (evt) {
-    if(message.contains(evt.target)) {
+  function onClickOutside (event) {
+    if(event.target.closest('.success__inner') === null && event.target.closest('.error__inner') === null) {
       closeMessageWindow();
     }
   }

@@ -70,8 +70,8 @@ imgUploadPlace.addEventListener('change', () => {
     imgPreview.src = URL.createObjectURL(file);
   }
   openUploadImgForm();
-  const effectsPreview = uploadForm.querySelectorAll('.effects__preview');
-  effectsPreview.forEach((preview) => {
+  const effectPreviews = uploadForm.querySelectorAll('.effects__preview');
+  effectPreviews.forEach((preview) => {
     preview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
   });
   changeEffects('none');

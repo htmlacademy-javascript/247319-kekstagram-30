@@ -5,7 +5,7 @@ const imgPreview = document.querySelector('.img-upload__preview img');
 const slider = document.querySelector('.effect-level__slider');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
-const effectTitle = document.querySelectorAll('.effects__radio');
+const effectTitles = document.querySelectorAll('.effects__radio');
 
 function changeScale (direction) {
   let currentValue = parseInt(scaleControlValue.value, 10);
@@ -124,7 +124,7 @@ function getUnitForEffect (effect) {
   }
 }
 
-effectTitle.forEach((radio) => {
+effectTitles.forEach((radio) => {
   radio.addEventListener('change', (event) => {
     if (event.target.checked){
       const currentEffect = event.target.value;

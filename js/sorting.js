@@ -13,14 +13,14 @@ function showFilters () {
   filterButtons.classList.remove('img-filters--inactive');
 }
 
-function sortingRandom(miniPicture) {
+function sortingRandom (miniPictures) {
   const delayedRender = debounce((shuffledPictures) => {
     clearMiniPictures();
     renderMiniPicture(shuffledPictures.slice(0, MAX_COUNT_SORTING_RANDOM));
   }, RERENDER_DELAY);
 
   filterRandom.addEventListener('click', () => {
-    const shuffledPictures = shuffleArray(miniPicture);
+    const shuffledPictures = shuffleArray(miniPictures);
     filterDefault.classList.remove(`${activeClassButton}`);
     filterDiscussed.classList.remove(`${activeClassButton}`);
     filterRandom.classList.add(`${activeClassButton}`);
@@ -28,10 +28,10 @@ function sortingRandom(miniPicture) {
   });
 }
 
-function sortingDefault (miniPicture) {
+function sortingDefault (miniPictures) {
   const delayedRender = debounce(() => {
     clearMiniPictures();
-    renderMiniPicture(miniPicture);
+    renderMiniPicture(miniPictures);
   }, RERENDER_DELAY);
   filterDefault.addEventListener('click', () => {
     filterDiscussed.classList.remove(`${activeClassButton}`);
@@ -42,8 +42,8 @@ function sortingDefault (miniPicture) {
 }
 
 
-function sortingDiscussed (miniPicture) {
-  const sortedPictures = sortByCommentsLength(miniPicture);
+function sortingDiscussed (miniPictures) {
+  const sortedPictures = sortByCommentsLength(miniPictures);
   const delayedRender = debounce(() => {
     clearMiniPictures();
     renderMiniPicture(sortedPictures);

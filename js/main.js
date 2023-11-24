@@ -5,13 +5,13 @@ import './effects-editor.js';
 import {showFilters, sortingRandom, sortingDefault, sortingDiscussed} from './sorting.js';
 
 getData()
-  .then((miniPicture) => {
-    if (typeof miniPicture !== 'undefined') {
-      renderMiniPicture(miniPicture);
+  .then((miniPictures) => {
+    if (typeof miniPictures !== 'undefined') {
+      renderMiniPicture(miniPictures);
       showFilters();
-      sortingRandom(miniPicture);
-      sortingDefault(miniPicture);
-      sortingDiscussed(miniPicture);
+      sortingRandom(miniPictures);
+      sortingDefault(miniPictures);
+      sortingDiscussed(miniPictures);
     }
   });
 

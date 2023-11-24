@@ -6,6 +6,7 @@ import {showSuccessUploadMessage, showErrorPhotoUploadMessage} from './action-me
 const HASGTAG_EXPRESSION_FOR_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAGS_COUNT_MAX = 5;
 const COMMENT_LENGTH_MAX = 140;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorMessage = {
   INVALID_HASHTAG_ERROR: 'Миву! Введён невалидный хэш-тег. Должен состоять из букв и чисел и не может содержать пробелы, спецсимволы и эмодзи. Длина не более 20 символов!',
   INVALID_HASHTAGS_COUNT_ERROR: 'Миву! Превышено количество хэш-тегов. Не более 5',
@@ -16,7 +17,6 @@ const SubmitButtonText = {
   ACTION: 'Опубликовать',
   POSTING: 'Публикую...'
 };
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const uploadForm = document.querySelector('.img-upload__form');
 const imgUpload = document.querySelector('.img-upload__overlay');
 const imgUploadPlace = document.querySelector('.img-upload__input');
@@ -34,9 +34,9 @@ const pristine = new Pristine(uploadForm, {
   errorTextTag: 'h2',
 });
 
-function onDocumentKeydown (evt) {
-  if (isEscapeKey(evt) && !hashtagsInput.matches(':focus') && !commentInput.matches(':focus')) {
-    evt.preventDefault();
+function onDocumentKeydown (event) {
+  if (isEscapeKey(event) && !hashtagsInput.matches(':focus') && !commentInput.matches(':focus')) {
+    event.preventDefault();
     const errorWindow = document.querySelector('.error');
     if (!errorWindow) {
       closeUploadImgForm();
@@ -137,13 +137,13 @@ function unblockSubmitButton () {
 }
 
 const setUploadFormSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  uploadForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     if (!pristine.validate()) {
-      evt.preventDefault();
+      event.preventDefault();
     } else {
       blockSubmitButton();
-      sendData(new FormData(evt.target))
+      sendData(new FormData(event.target))
         .then(() => {
           showSuccessUploadMessage();
           onSuccess();

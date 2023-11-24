@@ -1,11 +1,11 @@
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (event) => event.key === 'Escape';
 
-function shuffleArray(arr) {
-  return arr.slice().sort(() => Math.random() - 0.5);
+function shuffleArray(arrays) {
+  return arrays.slice().sort(() => Math.random() - 0.5);
 }
 
 function sortByCommentsLength(miniPicture) {
-  return miniPicture.slice().sort((a, b) => b.comments.length - a.comments.length);
+  return miniPicture.slice().sort((current, next) => next.comments.length - current.comments.length);
 }
 
 function debounce (callback, timeoutDelay = 500) {

@@ -52,7 +52,7 @@ function createCommentsForBigPhotoPost() {
   totalCommentsCount.textContent = comments.length;
 }
 
-function onloadMoreComments () {
+function onLoadMoreComments () {
   commentsShownCount += COMMENTS_PER_PAGE;
   if (commentsShownCount > comments.length) {
     commentsShownCount = comments.length;
@@ -60,6 +60,6 @@ function onloadMoreComments () {
   createCommentsForBigPhotoPost();
 }
 
-commentsLoader.addEventListener('click', onloadMoreComments);
+commentsLoader.addEventListener('click', onLoadMoreComments);
 
 export {createBigPhotoPost};

@@ -15,28 +15,28 @@ function showFilters () {
 
 function sortingRandom(miniPicture) {
   const delayedRender = debounce((shuffledPictures) => {
+    clearMiniPictures();
     renderMiniPicture(shuffledPictures.slice(0, MAX_COUNT_SORTING_RANDOM));
   }, RERENDER_DELAY);
 
   filterRandom.addEventListener('click', () => {
+    const shuffledPictures = shuffleArray(miniPicture);
     filterDefault.classList.remove(`${activeClassButton}`);
     filterDiscussed.classList.remove(`${activeClassButton}`);
     filterRandom.classList.add(`${activeClassButton}`);
-    const shuffledPictures = shuffleArray(miniPicture);
-    clearMiniPictures();
     delayedRender(shuffledPictures);
   });
 }
 
 function sortingDefault (miniPicture) {
   const delayedRender = debounce(() => {
+    clearMiniPictures();
     renderMiniPicture(miniPicture);
   }, RERENDER_DELAY);
   filterDefault.addEventListener('click', () => {
     filterDiscussed.classList.remove(`${activeClassButton}`);
     filterRandom.classList.remove(`${activeClassButton}`);
     filterDefault.classList.add(`${activeClassButton}`);
-    clearMiniPictures();
     delayedRender();
   });
 }
@@ -44,12 +44,14 @@ function sortingDefault (miniPicture) {
 
 function sortingDiscussed (miniPicture) {
   const sortedPictures = sortByCommentsLength(miniPicture);
-  const delayedRender = debounce(() => renderMiniPicture(sortedPictures), RERENDER_DELAY);
+  const delayedRender = debounce(() => {
+    clearMiniPictures();
+    renderMiniPicture(sortedPictures);
+  }, RERENDER_DELAY);
   filterDiscussed.addEventListener('click', () => {
     filterDefault.classList.remove(`${activeClassButton}`);
     filterRandom.classList.remove(`${activeClassButton}`);
     filterDiscussed.classList.add(`${activeClassButton}`);
-    clearMiniPictures();
     delayedRender();
   });
 }

@@ -125,9 +125,9 @@ function getUnitForEffect (effect) {
 }
 
 effectTitle.forEach((radio) => {
-  radio.addEventListener('change', (evt) => {
-    if (evt.target.checked){
-      const currentEffect = evt.target.value;
+  radio.addEventListener('change', (event) => {
+    if (event.target.checked){
+      const currentEffect = event.target.value;
       updateSliderOptions(getMinValueForEffect(currentEffect), getMaxValueForEffect(currentEffect), getStepForEffect(currentEffect), getUnitForEffect(currentEffect));
       slider.noUiSlider.set(100);
       effectLevelValue.value = 100;

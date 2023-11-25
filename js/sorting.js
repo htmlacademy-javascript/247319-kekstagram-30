@@ -3,22 +3,21 @@ import {shuffleArray, sortByCommentsLength, debounce} from './utils.js';
 
 const RERENDER_DELAY = 500;
 const MAX_COUNT_SORTING_RANDOM = 10;
+const ACTIVE_CLASS_BUTTON = 'img-filters__button--active';
 const filterButtons = document.querySelector('.img-filters');
 const filterDefault = document.querySelector('#filter-default');
 const filterRandom = document.querySelector('#filter-random');
 const filterDiscussed = document.querySelector('#filter-discussed');
-const activeClassButton = 'img-filters__button--active';
 
 function showFilters () {
   filterButtons.classList.remove('img-filters--inactive');
 }
 
 function toggleActiveClass (filter1, filter2, filter3) {
-  filter1.classList.toggle(`${activeClassButton}`, true);
-  filter2.classList.toggle(`${activeClassButton}`, false);
-  filter3.classList.toggle(`${activeClassButton}`, false);
+  filter1.classList.toggle(`${ACTIVE_CLASS_BUTTON}`, true);
+  filter2.classList.toggle(`${ACTIVE_CLASS_BUTTON}`, false);
+  filter3.classList.toggle(`${ACTIVE_CLASS_BUTTON}`, false);
 }
-
 
 function sortingRandom (miniPictures) {
   const delayedRender = debounce((shuffledPictures) => {
@@ -42,7 +41,6 @@ function sortingDefault (miniPictures) {
     delayedRender();
   });
 }
-
 
 function sortingDiscussed (miniPictures) {
   const sortedPictures = sortByCommentsLength(miniPictures);

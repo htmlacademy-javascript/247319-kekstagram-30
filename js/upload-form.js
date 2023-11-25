@@ -81,7 +81,7 @@ imgUploadClose.addEventListener('click', () => {
   closeUploadImgForm();
 });
 
-function getHashtagsValue(input) {
+function getHashtagsValue (input) {
   return input.value.toLowerCase().trim().split(/\s+/);
 }
 

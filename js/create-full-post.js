@@ -9,7 +9,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 let commentsShownCount = COMMENTS_PER_PAGE;
 let comments = [];
 
-function createBigPhotoPost(photoData) {
+function createBigPhotoPost (photoData) {
   bigPictureImg.src = photoData.url;
   bigPictureImg.alt = photoData.description;
   photoDescription.textContent = photoData.description;
@@ -19,7 +19,7 @@ function createBigPhotoPost(photoData) {
   createCommentsForBigPhotoPost();
 }
 
-function createCommentsForBigPhotoPost() {
+function createCommentsForBigPhotoPost () {
   commentsList.innerHTML = '';
   const commentsToShow = comments.slice(0, commentsShownCount);
 

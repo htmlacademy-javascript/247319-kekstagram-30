@@ -64,7 +64,7 @@ function closeUploadImgForm () {
 imgUploadPlace.addEventListener('change', () => {
   const file = imgUploadPlace.files[0];
   const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
 
   if (matches) {
     imgPreview.src = URL.createObjectURL(file);
@@ -81,23 +81,18 @@ imgUploadClose.addEventListener('click', () => {
   closeUploadImgForm();
 });
 
+function getHashtagsValue(input) {
+  return input.value.toLowerCase().trim().split(/\s+/);
+}
+
 function validateHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
+  const hashtags = getHashtagsValue(hashtagsInput);
 
   for (let i = 0; i < hashtags.length; i++) {
     const tag = hashtags[i];
 
-    if (tag === '') {
+    if (tag === '' || tag.startsWith('#') && tag.length >= 2 && tag.length <= 20 && HASGTAG_EXPRESSION_FOR_VALIDATION.test(tag)) {
       continue;
-    }
-
-    if (tag.startsWith('#')) {
-      const tagContent = tag.slice(1);
-      if (tagContent.length >= 1 && tagContent.length <= 19) {
-        if (HASGTAG_EXPRESSION_FOR_VALIDATION.test(tag)) {
-          continue;
-        }
-      }
     }
     return false;
   }
@@ -105,14 +100,14 @@ function validateHashtags () {
 }
 
 function validateUniqueHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
+  const hashtags = getHashtagsValue(hashtagsInput);
   const uniqueHashtags = new Set(hashtags);
 
   return uniqueHashtags.size === hashtags.length;
 }
 
 function validateCountHashtags () {
-  const hashtags = hashtagsInput.value.toLowerCase().trim().split(/\s+/);
+  const hashtags = getHashtagsValue(hashtagsInput);
 
   return hashtags.length <= HASHTAGS_COUNT_MAX;
 }

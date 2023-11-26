@@ -1,3 +1,6 @@
+const MAX_SCALE = 100;
+const MIN_SCALE = 25;
+const STEP_SCALE = 25;
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const scaleControlValue = document.querySelector('.scale__control--value');
@@ -9,10 +12,10 @@ const effectTitles = document.querySelectorAll('.effects__radio');
 
 function changeScale (direction) {
   let currentValue = parseInt(scaleControlValue.value, 10);
-  if (direction === 'smaller' && currentValue > 25) {
-    currentValue -= 25;
-  } else if (direction === 'bigger' && currentValue < 100) {
-    currentValue += 25;
+  if (direction === 'smaller' && currentValue > MIN_SCALE) {
+    currentValue -= STEP_SCALE;
+  } else if (direction === 'bigger' && currentValue < MAX_SCALE) {
+    currentValue += STEP_SCALE;
   }
   scaleControlValue.value = `${currentValue}%`;
   imgPreview.style.transform = `scale(${currentValue / 100})`;

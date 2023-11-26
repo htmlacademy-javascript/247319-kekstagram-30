@@ -1,5 +1,6 @@
 import {isEscapeKey} from './utils.js';
 
+const SHOW_ERROR_TIME = 5000;
 const body = document.querySelector('body');
 
 function showMessage (typeMessage, idTemplate, classMessage) {
@@ -52,7 +53,7 @@ function showErrorDataDownloadMessage () {
 
   setTimeout(() => {
     dataErrorMessage.remove ();
-  }, 5000);
+  }, SHOW_ERROR_TIME);
 }
 
 export {showErrorPhotoUploadMessage, showErrorDataDownloadMessage, showSuccessUploadMessage};

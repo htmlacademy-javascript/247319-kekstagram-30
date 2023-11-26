@@ -2,11 +2,11 @@ import {isEscapeKey} from './utils.js';
 import {changeEffects} from './effects-editor.js';
 import {sendData} from './network.js';
 import {showSuccessUploadMessage, showErrorPhotoUploadMessage} from './action-messages.js';
+import {getUserImage} from './user-image.js';
 
 const HASGTAG_EXPRESSION_FOR_VALIDATION = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAGS_COUNT_MAX = 5;
 const COMMENT_LENGTH_MAX = 140;
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorMessage = {
   INVALID_HASHTAG_ERROR: 'Миву! Введён невалидный хэш-тег. Должен состоять из букв и чисел и не может содержать пробелы, спецсимволы и эмодзи. Длина не более 20 символов!',
   INVALID_HASHTAGS_COUNT_ERROR: 'Миву! Превышено количество хэш-тегов. Не более 5',
@@ -62,18 +62,8 @@ function closeUploadImgForm () {
 }
 
 imgUploadPlace.addEventListener('change', () => {
-  const file = imgUploadPlace.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
-
-  if (matches) {
-    imgPreview.src = URL.createObjectURL(file);
-  }
   openUploadImgForm();
-  const effectPreviews = uploadForm.querySelectorAll('.effects__preview');
-  effectPreviews.forEach((preview) => {
-    preview.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
-  });
+  getUserImage();
   changeEffects('none');
 });
 

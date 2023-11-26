@@ -1,4 +1,6 @@
 const COMMENTS_PER_PAGE = 5;
+const COMMENT_AVATAR_WIDTH = 35;
+const COMMENT_AVATAR_HEIGHT = 35;
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const likesCount = document.querySelector('.likes-count');
 const photoDescription = document.querySelector('.social__caption');
@@ -31,8 +33,8 @@ function createCommentsForBigPhotoPost () {
     commentAvatar.classList.add('social__picture');
     commentAvatar.src = comment.avatar;
     commentAvatar.alt = comment.name;
-    commentAvatar.width = 35;
-    commentAvatar.height = 35;
+    commentAvatar.width = COMMENT_AVATAR_WIDTH;
+    commentAvatar.height = COMMENT_AVATAR_HEIGHT;
     commentItem.appendChild(commentAvatar);
 
     const commentText = document.createElement('p');
@@ -48,8 +50,8 @@ function createCommentsForBigPhotoPost () {
   } else {
     commentsLoader.classList.remove('hidden');
   }
-  commentsCount.textContent = Math.min(commentsShownCount, comments.length);
-  totalCommentsCount.textContent = comments.length;
+  commentsCount.textContent = `${Math.min(commentsShownCount, comments.length)}`;
+  totalCommentsCount.textContent = `${comments.length}`;
 }
 
 function onLoadMoreComments () {
